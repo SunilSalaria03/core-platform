@@ -48,6 +48,9 @@ Responsibilities:
 ## Getting Started
 
 ```bash
+# Document Link 
+https://lpinfotech0-my.sharepoint.com/personal/sunil_salaria_lnpinfotech_com/_layouts/15/AccessDenied.aspx?Source=https%3a%2f%2flpinfotech0-my.sharepoint.com%2f%3aw%3a%2fr%2fpersonal%2fsunil_salaria_lnpinfotech_com%2f_layouts%2f15%2fDoc.aspx%3fsourcedoc%3d%257B8725f082-9886-4a8a-9371-7ff81cd8b457%257D%26action%3dedit%26wdPid%3d996be20%26wdOrigin%3dTEAMS-MAGLEV.null_ns.rwc%26wdExp%3dTEAMS-TREATMENT%26wdhostclicktime%3d1767876411222%26web%3d1&correlation=21fdeaa1-c0e7-5000-5e50-da891b825ea1&Type=item&name=bf3ffe38-8d1b-473c-9047-ea92240f9fdb&listItemId=115&listItemUniqueId=8725f082-9886-4a8a-9371-7ff81cd8b457
+
 # Clone the repository
 git clone <https://github.com/SunilSalaria03?tab=repositories>
 cd core-platform
@@ -127,19 +130,7 @@ Thin application shells that compose features from packages and domains:
 Domain-Driven Design implementation:
 - **`school/`**: School management business rules
 - **`common/`**: Shared business logic across domains
-- **Pure business logic** (no framework dependencies)
 - **Testable in isolation**
-
-### Module Extraction Strategy
-
-Each `core-*` package is designed for **maximum reusability**:
-
-```bash
-# Extract any core module for standalone use
-npm install @core-platform/core-auth
-npm install @core-platform/core-billing
-npm install @core-platform/core-tenant
-```
 
 **Benefits:**
 - ✅ **Zero coupling** between modules
@@ -162,7 +153,7 @@ npm run type-check   # TypeScript type checking
 
 ### Frontend
 - **Framework:** Next.js (App Router)
-- **Tools:** React + TypeScript, Tailwind CSS, MUI, Zod, TanStack Query
+- **Tools:** React + TypeScript, Tailwind CSS, MUI, Zod
 
 ### Backend
 - **Framework:** NestJS
@@ -177,11 +168,7 @@ npm run type-check   # TypeScript type checking
 - Background jobs for notifications & async tasks
 
 ### Infrastructure & Hosting
-- **Frontend:** Vercel
-- **Backend:** AWS ECS / Fly.io
-- **Database:** AWS RDS (PostgreSQL)
-- **Storage:** AWS S3
-- **CI/CD:** GitHub Actions
+- **Deploy:** Azure
 
 ## Contributing
 
@@ -190,7 +177,3 @@ npm run type-check   # TypeScript type checking
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License.
