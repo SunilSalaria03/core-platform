@@ -2,6 +2,36 @@
 
 A reusable, production-grade SaaS foundation designed to accelerate the development of multi-tenant applications.
 
+## 🎯 Vision
+
+Core Platform is not a single SaaS product —  
+it is a **reusable SaaS platform** that enables building multiple products faster.
+
+The school system is just one implementation.
+The real product is the **platform itself**.
+
+This approach ensures:
+- Faster delivery of new SaaS products
+- Long-term maintainability
+- Consistent architecture across projects
+
+## 👥 Ownership
+
+**Owned and maintained by:** Core Platform Team
+
+Responsibilities:
+- Core architecture decisions
+- Reusable module design
+- Platform stability & scalability
+- Cross-product consistency
+
+## 🚫 Non-Goals
+
+- This repository is not a single-purpose school ERP
+- Apps should remain thin — business logic must live in domains
+- Core packages must not depend on domain-specific logic
+- UI apps must not bypass platform abstractions
+
 ## ✨ Key Features
 
 - **🔐 Multi-Tenant Ready**: Built for SaaS with tenant isolation from day one
