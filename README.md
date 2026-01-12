@@ -94,3 +94,15 @@ npm run dev
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+
+### Suggestions - Notes
+
+1. Auth
+2. Code first approach DB
+3. Email - sendgrid, AWS
+4. Cache - Local, Radish
+5. Seeding
+6. Lookups, lookkeys
+7. Tatent base/Tatent ID
+8. Single DB/ Multiple DB based on tenant ID.
