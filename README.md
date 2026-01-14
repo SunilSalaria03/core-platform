@@ -87,6 +87,69 @@ npm run dev
 ### Infrastructure & Hosting
 - **Deploy:** Azure
 
+## 📁 Project Structure
+
+```
+client/
+├── public/
+└── src/
+    ├── app/
+    ├── assets/
+    │   ├── css/
+    │   ├── images/
+    │   └── svg/
+    ├── hooks/
+    ├── lib/
+    ├── modules/
+    │   ├── admin/
+    │   │   ├── api/
+    │   │   │   ├── reducer/
+    │   │   │   └── slices/
+    │   │   ├── components/
+    │   │   ├── constants/
+    │   │   ├── pages/
+    │   │   ├── types/
+    │   │   └── validations/
+    │   ├── auth/
+    │   │   ├── api/
+    │   │   │   ├── reducer/
+    │   │   │   └── slices/
+    │   │   ├── components/
+    │   │   ├── constants/
+    │   │   ├── pages/
+    │   │   ├── types/
+    │   │   └── validations/
+    │   ├── super-admin/
+    │   │   ├── api/
+    │   │   │   ├── reducer/
+    │   │   │   └── slices/
+    │   │   ├── components/
+    │   │   ├── constants/
+    │   │   ├── pages/
+    │   │   ├── types/
+    │   │   └── validations/
+    │   └── user/
+    │       ├── api/
+    │       │   ├── reducer/
+    │       │   └── slices/
+    │       ├── components/
+    │       ├── constants/
+    │       ├── pages/
+    │       ├── types/
+    │       └── validations/
+    ├── shared/
+    │   └── components/
+    │       ├── common/
+    │       ├── layout/
+    │       └── ui/
+    ├── store/
+    └── utils/
+        ├── constants/
+        ├── helpers/
+        ├── modals/
+        └── validations/
+```
+
 ## Contributing
 
 1. Fork the repository
