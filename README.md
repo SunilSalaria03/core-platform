@@ -87,7 +87,7 @@ npm run dev
 ### Infrastructure & Hosting
 - **Deploy:** Azure
 
-## 📁 Project Structure
+## 📁 Project Structure Client
 
 ```
 client/
