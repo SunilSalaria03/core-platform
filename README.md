@@ -150,6 +150,85 @@ client/
         └── validations/
 ```
 
+## 📁 Project Structure Server
+
+server/
+├─ src/
+│  ├─ app.module.ts
+│  ├─ main.ts
+│  │
+│  ├─ config/                          # app + infra config only (env, db, swagger, etc.)
+│  │  ├─ env/
+│  │  ├─ database/
+│  │  ├─ swagger/
+│  │  └─ index.ts
+│  │
+│  ├─ common/                          # reusable cross-cutting code (used by many modules)
+│  │  ├─ constants/
+│  │  ├─ decorators/
+│  │  ├─ enums/
+│  │  ├─ exceptions/
+│  │  ├─ filters/
+│  │  ├─ guards/
+│  │  ├─ interceptors/
+│  │  ├─ interfaces/
+│  │  ├─ pipes/
+│  │  ├─ types/
+│  │  └─ utils/
+│  │
+│  ├─ shared/                          # shared services/providers (mail, storage, jwt, logger)
+│  │  ├─ logger/
+│  │  ├─ mail/
+│  │  ├─ cache/
+│  │  ├─ queue/
+│  │  ├─ storage/
+│  │  └─ shared.module.ts
+│  │
+│  ├─ modules/                         # feature modules (each is independent)
+│  │  ├─ auth/
+│  │  │  ├─ controllers/
+│  │  │  ├─ services/
+│  │  │  ├─ dto/
+│  │  │  ├─ validations/               # Joi/Zod schemas or custom validators (module scoped)
+│  │  │  ├─ constants/                 # module scoped constants
+│  │  │  ├─ interfaces/                # module scoped interfaces
+│  │  │  ├─ models/                    # schema/entity for this module only
+│  │  │  ├─ strategies/                # auth strategies
+│  │  │  └─ auth.module.ts
+│  │  │
+│  │  ├─ users/
+│  │  │  ├─ controllers/
+│  │  │  ├─ services/
+│  │  │  ├─ dto/
+│  │  │  ├─ validations/
+│  │  │  ├─ constants/
+│  │  │  ├─ interfaces/
+│  │  │  ├─ models/
+│  │  │  └─ users.module.ts
+│  │  │
+│  │  └─ <feature-name>/
+│  │     ├─ controllers/
+│  │     ├─ services/
+│  │     ├─ dto/
+│  │     ├─ validations/
+│  │     ├─ constants/
+│  │     ├─ interfaces/
+│  │     ├─ models/
+│  │     └─ <feature-name>.module.ts
+│  │
+│  ├─ middlewares/                     # app-level middleware wiring + shared middleware
+│  │  └─ *.middleware.ts
+│  │
+│  └─ database/                        # optional: if you want central DB layer
+│     ├─ mongoose/ | prisma/ | typeorm/
+│     └─ database.module.ts
+│
+├─ test/
+├─ dist/
+├─ package.json
+├─ tsconfig.json
+└─ README.md
+
 ## Contributing
 
 1. Fork the repository
