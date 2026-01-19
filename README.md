@@ -153,81 +153,78 @@ client/
 ## 📁 Project Structure Server
 
 server/
-├─ src/
-│  ├─ app.module.ts
-│  ├─ main.ts
-│  │
-│  ├─ config/                          # app + infra config only (env, db, swagger, etc.)
-│  │  ├─ env/
-│  │  ├─ database/
-│  │  ├─ swagger/
-│  │  └─ index.ts
-│  │
-│  ├─ common/                          # reusable cross-cutting code (used by many modules)
-│  │  ├─ constants/
-│  │  ├─ decorators/
-│  │  ├─ enums/
-│  │  ├─ exceptions/
-│  │  ├─ filters/
-│  │  ├─ guards/
-│  │  ├─ interceptors/
-│  │  ├─ interfaces/
-│  │  ├─ pipes/
-│  │  ├─ types/
-│  │  └─ utils/
-│  │
-│  ├─ shared/                          # shared services/providers (mail, storage, jwt, logger)
-│  │  ├─ logger/
-│  │  ├─ mail/
-│  │  ├─ cache/
-│  │  ├─ queue/
-│  │  ├─ storage/
-│  │  └─ shared.module.ts
-│  │
-│  ├─ modules/                         # feature modules (each is independent)
-│  │  ├─ auth/
-│  │  │  ├─ controllers/
-│  │  │  ├─ services/
-│  │  │  ├─ dto/
-│  │  │  ├─ validations/               # Joi/Zod schemas or custom validators (module scoped)
-│  │  │  ├─ constants/                 # module scoped constants
-│  │  │  ├─ interfaces/                # module scoped interfaces
-│  │  │  ├─ models/                    # schema/entity for this module only
-│  │  │  ├─ strategies/                # auth strategies
-│  │  │  └─ auth.module.ts
-│  │  │
-│  │  ├─ users/
-│  │  │  ├─ controllers/
-│  │  │  ├─ services/
-│  │  │  ├─ dto/
-│  │  │  ├─ validations/
-│  │  │  ├─ constants/
-│  │  │  ├─ interfaces/
-│  │  │  ├─ models/
-│  │  │  └─ users.module.ts
-│  │  │
-│  │  └─ <feature-name>/
-│  │     ├─ controllers/
-│  │     ├─ services/
-│  │     ├─ dto/
-│  │     ├─ validations/
-│  │     ├─ constants/
-│  │     ├─ interfaces/
-│  │     ├─ models/
-│  │     └─ <feature-name>.module.ts
-│  │
-│  ├─ middlewares/                     # app-level middleware wiring + shared middleware
-│  │  └─ *.middleware.ts
-│  │
-│  └─ database/                        # optional: if you want central DB layer
-│     ├─ mongoose/ | prisma/ | typeorm/
-│     └─ database.module.ts
-│
-├─ test/
-├─ dist/
-├─ package.json
-├─ tsconfig.json
-└─ README.md
+├── src/
+│   ├── app.controller.ts
+│   ├── app.module.ts
+│   ├── app.service.ts
+│   ├── main.ts
+│   ├── common/                    # 🆕 Shared modules across clients
+│   │   ├── database/              # Database configuration & entities
+│   │   │   ├── entities/          # Base entities (User, Role, etc.)
+│   │   │   ├── migrations/        # Database migrations
+│   │   │   ├── repositories/      # Base repositories
+│   │   │   └── database.module.ts
+│   │   ├── dto/                   # Shared DTOs
+│   │   │   ├── pagination.dto.ts
+│   │   │   ├── response.dto.ts
+│   │   │   └── validation/
+│   │   ├── guards/                # Global guards (Auth, Roles)
+│   │   ├── interceptors/          # Global interceptors (Logging, Response)
+│   │   ├── decorators/            # Custom decorators
+│   │   ├── filters/               # Exception filters
+│   │   ├── utils/                 # Utility functions
+│   │   ├── interfaces/            # TypeScript interfaces
+│   │   └── common.module.ts       # Export all common components
+│   ├── auth/                      # Authentication module
+│   │   ├── dto/
+│   │   │   ├── login.dto.ts
+│   │   │   ├── register.dto.ts
+│   │   │   └── refresh-token.dto.ts
+│   │   ├── entities/
+│   │   │   ├── user.entity.ts     # Extends common User entity
+│   │   │   └── refresh-token.entity.ts
+│   │   ├── guards/
+│   │   │   ├── jwt-auth.guard.ts
+│   │   │   └── roles.guard.ts
+│   │   ├── strategies/
+│   │   │   ├── jwt.strategy.ts
+│   │   │   └── local.strategy.ts
+│   │   ├── auth.controller.ts
+│   │   ├── auth.service.ts
+│   │   ├── auth.module.ts
+│   │   └── user/                  # Move user logic here or keep separate
+│   ├── user/                      # User management module
+│   │   ├── dto/
+│   │   │   ├── create-user.dto.ts
+│   │   │   ├── update-user.dto.ts
+│   │   │   └── user-profile.dto.ts
+│   │   ├── entities/
+│   │   │   └── user.entity.ts     # Extends common User entity
+│   │   ├── user.controller.ts
+│   │   ├── user.service.ts
+│   │   ├── user.module.ts
+│   │   └── user.repository.ts
+│   ├── admin/                     # 🆕 Admin management module
+│   │   ├── dto/
+│   │   │   ├── admin-user.dto.ts
+│   │   │   └── admin-stats.dto.ts
+│   │   ├── admin.controller.ts
+│   │   ├── admin.service.ts
+│   │   ├── admin.module.ts
+│   │   └── dashboard/             # Admin dashboard features
+│   └── shared/                    # Client-specific shared modules
+│       ├── config/                # Environment configs
+│       ├── constants/             # App constants
+│       └── types/                 # App-specific types
+├── test/
+│   ├── common/
+│   ├── auth/
+│   ├── user/
+│   └── admin/
+└── libs/                          # 🆕 Reusable libraries
+    ├── core/                      # Core business logic
+    ├── api-client/                # External API clients
+    └── messaging/                 # Message queue clients
 
 ## Contributing
 
