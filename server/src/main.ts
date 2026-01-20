@@ -10,6 +10,7 @@ async function bootstrap() {
     logger: ['error', 'warn', 'log', 'debug'],
   });
 
+  // Global Validation Pipe
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -25,6 +26,9 @@ async function bootstrap() {
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   });
+
+  // Global API prefix
+  app.setGlobalPrefix('api/v1');
 
   // Prisma shutdown hooks
   const prismaService = app.get(PrismaService);

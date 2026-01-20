@@ -4,8 +4,8 @@ import {
   NotFoundException,
   Logger,
 } from '@nestjs/common';
-import { UsersRepository } from '../repository/user.repository';
-import { CreateUserDto } from '../dto/user.dto';
+import { UsersRepository } from '../repository';
+import { CreateUserDto } from '../dto';
 import { User } from '@prisma/client';
 
 @Injectable()

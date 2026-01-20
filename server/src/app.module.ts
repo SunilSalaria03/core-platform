@@ -1,15 +1,26 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { PrismaService } from './database/prisma/prisma.service';
+import { DatabaseModule } from './database/database.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/user/user.module';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env.development',
+      envFilePath:
+        process.env.NODE_ENV === 'production'
+          ? '.env.production'
+          : '.env.development',
+      cache: true,
     }),
+    DatabaseModule,
+    AuthModule,
+    UsersModule,
+    SharedModule,
   ],
-  providers: [PrismaService],
+  providers: [],
+  controllers: [],
 })
 export class AppModule {}

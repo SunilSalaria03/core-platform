@@ -4,11 +4,12 @@ import {
   IsNotEmpty,
   MinLength,
   MaxLength,
+  Matches,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { VALIDATION_MESSAGES } from '../../../common/constants/validationMessages';
 
-export class CreateUserDto {
+export class SignupDto {
   @IsString()
   @IsNotEmpty({ message: VALIDATION_MESSAGES.NAME_REQUIRED })
   @MinLength(2, { message: VALIDATION_MESSAGES.NAME_MIN_LENGTH })
@@ -20,17 +21,13 @@ export class CreateUserDto {
   @IsNotEmpty({ message: VALIDATION_MESSAGES.EMAIL_REQUIRED })
   @Transform(({ value }: { value: string }) => value?.toLowerCase().trim())
   email: string;
-  password: string;
-  isActive?: boolean;
-  emailVerified?: boolean;
-}
 
-export class UserResponseDto {
-  id: string;
-  name: string;
-  email: string;
-  isActive: boolean;
-  emailVerified: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  @IsString()
+  @IsNotEmpty({ message: VALIDATION_MESSAGES.PASSWORD_REQUIRED })
+  @MinLength(8, { message: VALIDATION_MESSAGES.PASSWORD_MIN_LENGTH })
+  @MaxLength(128, { message: VALIDATION_MESSAGES.PASSWORD_MAX_LENGTH })
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/, {
+    message: VALIDATION_MESSAGES.PASSWORD_TOO_WEAK,
+  })
+  password: string;
 }
