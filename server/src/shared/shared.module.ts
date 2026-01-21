@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { CommonUtilsService } from './commonUtils.service';
-import { FileUploadService } from './fileUpload.service';
+import { CommonUtilsService } from './common-utils.service';
+import { FileUploadService } from './file-upload.service';
 import { SearchService } from './search.service';
 
 // Shared services and providers

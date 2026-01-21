@@ -150,81 +150,138 @@ client/
         └── validations/
 ```
 
-## 📁 Project Structure Server
+## 📁 Server Folder Structure
 
+```
 server/
 ├── src/
-│   ├── app.controller.ts
-│   ├── app.module.ts
-│   ├── app.service.ts
-│   ├── main.ts
-│   ├── common/                    # 🆕 Shared modules across clients
-│   │   ├── database/              # Database configuration & entities
-│   │   │   ├── entities/          # Base entities (User, Role, etc.)
-│   │   │   ├── migrations/        # Database migrations
-│   │   │   ├── repositories/      # Base repositories
-│   │   │   └── database.module.ts
-│   │   ├── dto/                   # Shared DTOs
-│   │   │   ├── pagination.dto.ts
-│   │   │   ├── response.dto.ts
-│   │   │   └── validation/
-│   │   ├── guards/                # Global guards (Auth, Roles)
-│   │   ├── interceptors/          # Global interceptors (Logging, Response)
-│   │   ├── decorators/            # Custom decorators
-│   │   ├── filters/               # Exception filters
-│   │   ├── utils/                 # Utility functions
-│   │   ├── interfaces/            # TypeScript interfaces
-│   │   └── common.module.ts       # Export all common components
-│   ├── auth/                      # Authentication module
-│   │   ├── dto/
-│   │   │   ├── login.dto.ts
-│   │   │   ├── register.dto.ts
-│   │   │   └── refresh-token.dto.ts
-│   │   ├── entities/
-│   │   │   ├── user.entity.ts     # Extends common User entity
-│   │   │   └── refresh-token.entity.ts
-│   │   ├── guards/
-│   │   │   ├── jwt-auth.guard.ts
-│   │   │   └── roles.guard.ts
-│   │   ├── strategies/
-│   │   │   ├── jwt.strategy.ts
-│   │   │   └── local.strategy.ts
-│   │   ├── auth.controller.ts
-│   │   ├── auth.service.ts
-│   │   ├── auth.module.ts
-│   │   └── user/                  # Move user logic here or keep separate
-│   ├── user/                      # User management module
-│   │   ├── dto/
-│   │   │   ├── create-user.dto.ts
-│   │   │   ├── update-user.dto.ts
-│   │   │   └── user-profile.dto.ts
-│   │   ├── entities/
-│   │   │   └── user.entity.ts     # Extends common User entity
-│   │   ├── user.controller.ts
-│   │   ├── user.service.ts
-│   │   ├── user.module.ts
-│   │   └── user.repository.ts
-│   ├── admin/                     # 🆕 Admin management module
-│   │   ├── dto/
-│   │   │   ├── admin-user.dto.ts
-│   │   │   └── admin-stats.dto.ts
-│   │   ├── admin.controller.ts
-│   │   ├── admin.service.ts
-│   │   ├── admin.module.ts
-│   │   └── dashboard/             # Admin dashboard features
-│   └── shared/                    # Client-specific shared modules
-│       ├── config/                # Environment configs
-│       ├── constants/             # App constants
-│       └── types/                 # App-specific types
+│   ├── app.module.ts                               # Main application module
+│   ├── main.ts                                     # Application entry point
+│   │
+│   ├── common
+│   │   ├── constants/                              # Constants
+│   │   │    ├── common.constants.ts
+│   │   │    ├── file-upload.constants.ts
+│   │   │    ├── http-status.constants.ts
+│   │   │    └── validation-messages.constants.ts
+│   │   ├── decorators/                             # Decorators
+│   │   │   └── common.decorators.ts
+│   │   ├── dto/                                    # Data Transfer Objects
+│   │   │   ├── api-response.dto.ts
+│   │   │   └── common.dtos.ts
+│   │   ├── enums/                                  # enums
+│   │   │   ├── api.enum.ts
+│   │   │   └── common.enums.ts
+│   │   ├── filters/                                # filters
+│   │   │   └── common.filters.ts
+│   │   ├── interceptors/                           # filters
+│   │   │   └── common.interceptors.ts
+│   │   ├── interfaces/                             # TypeScript interfaces
+│   │   │   ├── api-response.interface.ts
+│   │   │   └── common.interfaces.ts
+│   │   ├── middlewares/                            # middlewares
+│   │   │   ├── logger.middlewares.ts
+│   │   │   └── common.middlewares.ts
+│   │   ├── pipes/                                  # pipes
+│   │   │   └── common.pipes.ts
+│   │   └── utils/                                  # Utility functions
+│   │       ├── common.utils.ts
+│   │       └── response.utils.ts
+│   │
+│   ├── config/
+│   │   ├── config.module.ts
+│   │   ├── env/
+│   │   │   └── env.config.ts
+│   │   └── swagger/
+│   │       └── swagger.config.ts
+│   │
+│   ├── database/
+│   │   ├── database.module.ts
+│   │   └── prisma/
+│   │       ├── prisma.config.ts
+│   │       ├── prisma.service.ts
+│   │       ├── schema.prisma
+│   │       ├── seeds/
+│   │       │   └── seed.ts
+│   │       └── migrations/
+│   │           ├── 2026**
+│   │           │   └── migration.sql
+│   │           └── 2026**
+│   │               └── migration.sql
+│   │
+│   ├── infrastructure/
+│   │   ├── infrastructure.module.ts
+│   │   ├── cache/
+│   │   │   ├── cache.module.ts
+│   │   │   └── cache.service.ts
+│   │   ├── logger/
+│   │   │   ├── logger.module.ts
+│   │   │   └── logger.service.ts
+│   │   ├── mail/
+│   │   │   ├── mail.module.ts
+│   │   │   └── mail.service.ts
+│   │   ├── queue/
+│   │   │   ├── queue.module.ts
+│   │   │   └── queue.service.ts
+│   │   └── storage/
+│   │       ├── storage.module.ts
+│   │       └── storage.service.ts
+│   │
+│   ├── modules
+│   │   ├── auth/                  # Authentication module
+│   │   │   ├── auth.controller.ts
+│   │   │   ├── auth.module.ts
+│   │   │   ├── auth.service.ts
+│   │   │   ├── dto/
+│   │   │   │   ├── auth.dto.ts
+│   │   │   │   ├── login.dto.ts
+│   │   │   │   └── register.dto.ts
+│   │   │   ├── strategies/
+│   │   │   │   ├── jwt.strategy.ts
+│   │   │   │   └── local.strategy.ts
+│   │   │   └── validations/
+│   │   │       └── auth.validation.ts
+│   │   ├── user/                  # User management module
+│   │   │   ├── user.controller.ts
+│   │   │   ├── user.module.ts
+│   │   │   ├── user.service.ts
+│   │   │   ├── dto/
+│   │   │   │   ├── create-user.dto.ts
+│   │   │   │   ├── update-user.dto.ts
+│   │   │   │   └── user-response.dto.ts
+│   │   │   ├── entities/
+│   │   │   │   └── user.entity.ts
+│   │   │   ├── repository/
+│   │   │   │   └── user.repository.ts
+│   │   │   └── validations/
+│   │   │       └── user.validation.ts
+│   │   └── health/                 # Health module ( for live )
+│   │       ├── health.controller.ts
+│   │       ├── health.module.ts
+│   │       └── health.service.ts
+│   │
+│   └── shared/
+│       ├── shared.module.ts
+│       └── helpers/
+│           ├── crypto.helper.ts
+│           ├── pagination.helper.ts
+│           └── slug.helper.ts
+│
 ├── test/
-│   ├── common/
-│   ├── auth/
-│   ├── user/
-│   └── admin/
-└── libs/                          # 🆕 Reusable libraries
-    ├── core/                      # Core business logic
-    ├── api-client/                # External API clients
-    └── messaging/                 # Message queue clients
+│   ├── app.e2e-spec.ts
+│   └── jest-e2e.json
+│
+├── .gitignore
+├── .env.development                            # Development enviornment file (.gitignore)
+├── .env.staging                                # Staging enviornment file (.gitignore)
+├── .env.production                             # Production enviornment (.gitignore)
+├── eslint.config.mjs
+├── nest-cli.json
+├── package-lock.json                           # lock file (.gitignore)
+├── package.json
+├── tsconfig.json
+└── tsconfig.build.json
+```
 
 ## Contributing
 
