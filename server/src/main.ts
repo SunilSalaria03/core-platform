@@ -1,7 +1,9 @@
+import { ValidationPipe, Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe, Logger } from '@nestjs/common';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { PrismaService } from './database/prisma/prisma.service';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
@@ -9,6 +11,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'warn', 'log', 'debug'],
   });
+
+  // Cookie Parser
+  app.use(cookieParser());
 
   // Global Validation Pipe
   app.useGlobalPipes(
@@ -30,9 +35,12 @@ async function bootstrap() {
   // Global API prefix
   app.setGlobalPrefix('api/v1');
 
+  app.useGlobalFilters(new HttpExceptionFilter());
+
+
   // Prisma shutdown hooks
   const prismaService = app.get(PrismaService);
-  prismaService.enableShutdownHooks(app);
+  await prismaService.enableShutdownHooks(app);
 
   const port = process.env.PORT || 5003;
   await app.listen(port);
@@ -40,4 +48,7 @@ async function bootstrap() {
   logger.log(`Application is running on: http://localhost:${port}`);
 }
 
-void bootstrap();
+bootstrap().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

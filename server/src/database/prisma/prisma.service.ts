@@ -4,14 +4,10 @@ import {
   OnModuleDestroy,
   OnApplicationShutdown,
   Logger,
-} from '@nestjs/common';
+  INestApplication, } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
-import * as dotenv from 'dotenv';
-import * as path from 'path';
-
-dotenv.config({ path: path.resolve(process.cwd(), '.env.development') });
 
 @Injectable()
 export class PrismaService
@@ -47,9 +43,9 @@ export class PrismaService
   async onModuleInit() {
     try {
       await this.$connect();
-      this.logger.log('Database connection established');
+      console.log('Database connection established');
     } catch (error) {
-      this.logger.error('Failed to connect to database', {
+      console.error('Failed to connect to database', {
         error: error as unknown as Error,
       });
       throw error;
@@ -59,12 +55,11 @@ export class PrismaService
   async onModuleDestroy() {
     await this.$disconnect();
   }
-
-  async onApplicationShutdown(_signal?: string) {
+  async onApplicationShutdown(signal?: string) {
+    console.log(`✅ Prisma disconnected${signal ? ` (signal: ${signal})` : ''}`);
     await this.$disconnect();
   }
-
-  enableShutdownHooks(app: any) {
-    return;
+  enableShutdownHooks(app: INestApplication): Promise<void> {
+    return app.close();
   }
 }
