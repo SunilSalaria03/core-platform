@@ -3,5 +3,9 @@ export interface IRefreshTokenPayload {
     email: string;
     iat: number;     // issued at
     exp: number;     // expiry date
-  }
-  
+}
+
+export interface IUser {
+  id: string;
+  email: string;
+}

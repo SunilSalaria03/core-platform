@@ -1,8 +1,16 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { CookiesService } from './cookies/cookies.service';
 
 @Module({
-  providers: [CookiesService],
-  exports: [CookiesService],
+  imports: [
+    ConfigModule,
+  ],
+  providers: [
+    CookiesService,
+  ],
+  exports: [
+    CookiesService,
+  ],
 })
 export class InfrastructureModule {}

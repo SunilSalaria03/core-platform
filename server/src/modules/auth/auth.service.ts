@@ -3,8 +3,8 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { UserRepository } from '../user/repository/user.repository';
+import { AuthRepository } from './repository/auth.repository';
+import { UserRepository } from '../user/repositary/user.repositary';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import * as bcrypt from 'bcryptjs';
@@ -15,9 +15,9 @@ import { IRefreshTokenPayload } from './interfaces/refresh-token.interface';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly users: UserRepository,
-    private readonly jwt: JwtService,
+    private readonly userService: UserRepository,
     private readonly tokenService: TokenService,
+    private readonly authService: AuthRepository,
   ) {}
 
   private async signAccessToken(user: { id: string; email: string }) {
@@ -29,12 +29,12 @@ export class AuthService {
   }
 
   async signup(dto: RegisterDto) {
-    const existing = await this.users.findByEmail(dto.email.toLowerCase());
+    const existing = await this.userService.findByEmail(dto.email.toLowerCase());
     if (existing) throw new BadRequestException('Email already exists');
 
-    const passwordHash = await bcrypt.hash(dto.password, 12);
+    const passwordHash = await hashValue(dto.password, 12);
 
-    const user = await this.users.create({
+    const user = await this.userService.create({
       name: dto.name,
       email: dto.email.toLowerCase(),
       password: passwordHash,
@@ -45,8 +45,8 @@ export class AuthService {
     const accessToken = await this.signAccessToken(user);
     const refreshToken = await this.signRefreshToken(user);
 
-    const refreshTokenHash = await bcrypt.hash(refreshToken, 12);
-    await this.users.updateRefreshTokenHash(user.id, refreshTokenHash);
+    const refreshTokenHash = await hashValue(refreshToken, 12);
+    await this.authService.updateRefreshTokenHash(user.id, refreshTokenHash);
 
     return { user, accessToken, refreshToken };
   }
@@ -54,7 +54,7 @@ export class AuthService {
   async login(dto: LoginDto) {
     const email = dto.email.toLowerCase();
 
-    const user = await this.users.findByEmail(email);
+    const user = await this.userService.findByEmail(email);
     if (!user) throw new UnauthorizedException('Invalid credentials');
     if (!user.isActive) throw new UnauthorizedException('User is inactive');
 
@@ -65,7 +65,7 @@ export class AuthService {
     const refreshToken = await this.signRefreshToken(user);
 
     const refreshTokenHash = await hashValue(refreshToken);
-    await this.users.updateRefreshTokenHash(user.id, refreshTokenHash);
+    await this.authService.updateRefreshTokenHash(user.id, refreshTokenHash);
 
     return { user, accessToken, refreshToken };
   }
@@ -80,18 +80,18 @@ export class AuthService {
       throw new UnauthorizedException('Invalid or expired refresh token');
     }
 
-    const user = await this.users.findById(payload.sub);
+    const user = await this.userService.findById(payload.sub);
     if (!user || !user.isActive) throw new UnauthorizedException('User not found');
 
     if (!user.refreshTokenHash) {
       throw new UnauthorizedException('Refresh token already used or revoked');
     }
 
-    const matches = await compareHash(refreshToken, user.refreshTokenHash as string);
+    const matches = await compareHash(refreshToken, user.refreshTokenHash);
     if (!matches) throw new UnauthorizedException('Refresh token mismatch');
 
     const accessToken = await this.signAccessToken(user);
-    await this.users.updateRefreshTokenHash(user.id, null);
+    await this.authService.updateRefreshTokenHash(user.id, null);
 
     return { accessToken };
   }
