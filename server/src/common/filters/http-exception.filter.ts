@@ -1,3 +1,4 @@
+// HTTP exception filter
 import {
     ArgumentsHost,
     Catch,
@@ -11,6 +12,7 @@ import {
   @Catch()
   export class HttpExceptionFilter implements ExceptionFilter {
     catch(exception: unknown, host: ArgumentsHost) {
+      // context host
       const ctx = host.switchToHttp();
       const response = ctx.getResponse<Response>();
   
@@ -33,6 +35,7 @@ import {
         }
       }
   
+      // body response
       const body: ApiResponseDto<null> = {
         success: false,
         statusCode,

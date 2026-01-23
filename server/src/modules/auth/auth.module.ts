@@ -1,3 +1,4 @@
+// Auth module
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
@@ -10,17 +11,17 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { TokenService } from './token.service';
 import { AuthRepository } from './repository/auth.repository';
-import { CookiesService } from '../../infrastructure/cookies/cookies.service'; // 👈 adjust path to your actual file
+import { CookiesService } from '../../infrastructure/cookies/cookies.service';
 
 @Module({
   imports: [
     ConfigModule,
     UserModule,
     PassportModule,
-    JwtModule.registerAsync({
+    JwtModule.registerAsync({ // Register JWT module
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({ // Use factory to get the secret
         secret: configService.get<string>('JWT_SECRET'), // unable to get access function here
       }),
     }),

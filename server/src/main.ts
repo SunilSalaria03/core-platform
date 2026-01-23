@@ -6,6 +6,7 @@ import { PrismaService } from './database/prisma/prisma.service';
 import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
+  // Bootstrap function
   const logger = new Logger('Bootstrap');
 
   const app = await NestFactory.create(AppModule, {
@@ -40,6 +41,7 @@ async function bootstrap() {
 
   // Prisma shutdown hooks
   const prismaService = app.get(PrismaService);
+  // eslint-disable-next-line @typescript-eslint/await-thenable
   await prismaService.enableShutdownHooks(app);
 
   const port = process.env.PORT || 5003;

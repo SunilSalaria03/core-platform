@@ -22,12 +22,12 @@ export function getPrismaClient(): PrismaClient {
   return prismaInstance;
 }
 
-// For backward compatibility and explicit creation
+// create prisma client
 export function createPrismaClient(): PrismaClient {
   return getPrismaClient();
 }
 
-// Get the PrismaClient options for extending PrismaClient
+// get the PrismaClient options for extending PrismaClient
 export function getPrismaClientOptions(): { adapter: PrismaPg } {
   const connectionString = process.env.DATABASE_URL;
   if (!connectionString) {

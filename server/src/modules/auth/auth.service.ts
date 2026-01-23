@@ -1,3 +1,4 @@
+// Auth service
 import {
   BadRequestException,
   Injectable,
@@ -12,7 +13,7 @@ import { TokenService } from './token.service';
 import { compareHash, hashValue } from 'src/shared/helpers/crypto.helper';
 import { IRefreshTokenPayload } from './interfaces/refresh-token.interface';
 
-@Injectable()
+@Injectable() // Injectable decorator
 export class AuthService {
   constructor(
     private readonly userService: UserRepository,
@@ -20,14 +21,17 @@ export class AuthService {
     private readonly authService: AuthRepository,
   ) {}
 
+  // sign access token
   private async signAccessToken(user: { id: string; email: string }) {
     return this.tokenService.signAccessToken(user);
   }
 
+  // sign refresh token
   private async signRefreshToken(user: { id: string; email: string }) {
     return this.tokenService.signRefreshToken(user);
   }
 
+  // signup
   async signup(dto: RegisterDto) {
     const existing = await this.userService.findByEmail(dto.email.toLowerCase());
     if (existing) throw new BadRequestException('Email already exists');
@@ -51,6 +55,7 @@ export class AuthService {
     return { user, accessToken, refreshToken };
   }
 
+  // login
   async login(dto: LoginDto) {
     const email = dto.email.toLowerCase();
 
@@ -70,6 +75,7 @@ export class AuthService {
     return { user, accessToken, refreshToken };
   }
 
+  // refresh one time
   async refreshOneTime(refreshToken: string) {
     if (!refreshToken) throw new UnauthorizedException('Refresh token missing');
 

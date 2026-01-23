@@ -1,3 +1,4 @@
+// Auth constants
 export const AUTH_CONSTANTS = {
   LOGIN_SUCCESS: 'Login successful',
   SIGNUP_SUCCESS: 'Signup successful',

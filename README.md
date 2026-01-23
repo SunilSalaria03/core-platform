@@ -249,8 +249,6 @@ server/
 │   │   │   │   ├── create-user.dto.ts
 │   │   │   │   ├── update-user.dto.ts
 │   │   │   │   └── user-response.dto.ts
-│   │   │   ├── entities/
-│   │   │   │   └── user.entity.ts
 │   │   │   ├── repository/
 │   │   │   │   └── user.repository.ts
 │   │   │   └── validations/

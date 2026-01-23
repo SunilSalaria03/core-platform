@@ -1,3 +1,4 @@
+// Auth controller
 import {BadRequestException, Body, Controller, Post, Req, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
@@ -12,20 +13,20 @@ import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { AUTH_CONSTANTS } from './constants/auth.constants';
 import { HTTP_STATUS } from 'src/common/constants/http-status.constants';
 
-@ApiTags('Auth')
-@Controller('auth')
+@ApiTags('Auth') // Swagger tags
+@Controller('auth') // Controller route
 export class AuthController {
   constructor(
     private readonly auth: AuthService,
     private readonly cookies: CookiesService,
   ) {}
 
-  @Public()
-  @Post('signup')
+  @Public() // Public decorator
+  @Post('signup') // Signup route
   async signup(@Body() dto: RegisterDto, @Res({ passthrough: true }) res: Express.Response) {
-    const result = await this.auth.signup(dto);
+    const result = await this.auth.signup(dto); // Signup the user
 
-    this.cookies.setRefreshToken(res as Response, result.refreshToken);
+    this.cookies.setRefreshToken(res as Response, result.refreshToken); // Set the refresh token
 
     return success(
       { user: result.user, accessToken: result.accessToken },
@@ -35,11 +36,11 @@ export class AuthController {
   }
 
   @Public()
-  @Post('login')
+  @Post('login') // Login route
   async login(@Body() dto: LoginDto, @Res({ passthrough: true }) res: Express.Response) {
-    const result = await this.auth.login(dto);
+    const result = await this.auth.login(dto); // Login the user
 
-    this.cookies.setRefreshToken(res as Response, result.refreshToken);
+    this.cookies.setRefreshToken(res as Response, result.refreshToken); // Set the refresh token
 
     return success(
       { user: result.user, accessToken: result.accessToken },
@@ -48,10 +49,10 @@ export class AuthController {
     );
   }
 
-  @Post('refreshToken')
+  @Post('refreshToken') // Refresh token route
   async refreshToken(
-    @Req() req: Express.Request,
-    @Body() body: Partial<RefreshTokenDto>,
+    @Req() req: Express.Request, // Request
+    @Body() body: Partial<RefreshTokenDto>, // Body
     @Res({ passthrough: true }) res: Express.Request,
   ) {
     const tokenFromBody = body?.refreshToken;

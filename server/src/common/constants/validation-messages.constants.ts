@@ -1,3 +1,4 @@
+// Validation messages constants
 export const VALIDATION_MESSAGES = {
   NAME_REQUIRED: 'Name is required',
   EMAIL_REQUIRED: 'Email is required',

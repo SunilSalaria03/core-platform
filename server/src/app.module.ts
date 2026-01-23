@@ -1,3 +1,4 @@
+// App module
 import {  Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
@@ -7,7 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtGlobalGuard } from './common/guards/jwt.guard';
-import { RolesGuard } from './common/guards/users.guard';
+import { RolesGuard } from './common/guards/user.guard';
 import { InfrastructureModule } from './infrastructure/infrastructure.module';
 
 @Module({
@@ -18,7 +19,7 @@ import { InfrastructureModule } from './infrastructure/infrastructure.module';
         process.env.NODE_ENV === 'production'
           ? '.env.production'
           : '.env.development',
-      cache: true,
+      cache: true, // Cache the environment variables
     }),
     DatabaseModule,
     AuthModule,
@@ -28,8 +29,8 @@ import { InfrastructureModule } from './infrastructure/infrastructure.module';
     InfrastructureModule
   ],
   providers: [
-    { provide: APP_GUARD, useClass: JwtGlobalGuard },
-    { provide: APP_GUARD, useClass: RolesGuard },
+    { provide: APP_GUARD, useClass: JwtGlobalGuard }, // Jwt global guard
+    { provide: APP_GUARD, useClass: RolesGuard }, // Roles guard
   ],
   controllers: [],
 })

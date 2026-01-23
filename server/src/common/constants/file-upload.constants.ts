@@ -1,3 +1,4 @@
+// File upload constants
 export const UPLOAD_TYPES = {
   IMAGE: 'image',
   DOCUMENT: 'document',
@@ -6,6 +7,7 @@ export const UPLOAD_TYPES = {
 
 export type UploadType = typeof UPLOAD_TYPES[keyof typeof UPLOAD_TYPES];
 
+// Supported mime types
 export const SUPPORTED_MIME_TYPES = {
   JPEG: 'image/jpeg',
   JPG: 'image/jpg',

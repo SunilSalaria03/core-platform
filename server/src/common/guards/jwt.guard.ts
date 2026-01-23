@@ -1,3 +1,4 @@
+// JWT global guard
 import { ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
@@ -10,6 +11,7 @@ export class JwtGlobalGuard extends AuthGuard('jwt') {
   }
 
   canActivate(context: ExecutionContext) {
+    // check if the route is public
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
@@ -21,9 +23,10 @@ export class JwtGlobalGuard extends AuthGuard('jwt') {
   }
 
   handleRequest<TUser = any>(err: Error | null, user: TUser,): TUser {
+    // check if the user is authenticated
     if (err || !user) {
       throw err || new UnauthorizedException('Unauthorized');
     }
-    return user;
+    return user; // return the user
   }
   }

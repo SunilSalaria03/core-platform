@@ -1,3 +1,4 @@
+// Local strategy
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
@@ -7,10 +8,11 @@ import { LoginDto } from '../dto/login.dto';
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy, 'local') {
   constructor(private readonly userService: UserRepository) {
-    super({ usernameField: 'email' });
+    super({ usernameField: 'email' }); // Username field
   }
 
   async validate(dto: LoginDto) {
+    // Validate the user
     const user = await this.userService.findByEmail(dto.email.toLowerCase());
     if (!user) throw new UnauthorizedException('Invalid credentials');
     return user;
