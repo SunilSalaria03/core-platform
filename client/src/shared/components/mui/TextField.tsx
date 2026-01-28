@@ -1,6 +1,8 @@
-// src/shared/components/ui/TextField.tsx
+// MUI TextField Component
+"use client";
+
 import { TextField as MuiTextField, TextFieldProps } from "@mui/material";
 
 export const TextField = (props: TextFieldProps) => {
-  return <MuiTextField variant="outlined" size="small" {...props} />;
+  return <MuiTextField fullWidth size="medium" {...props} />;
 };

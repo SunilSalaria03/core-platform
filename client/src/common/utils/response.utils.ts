@@ -1,27 +1,12 @@
-// Response utils
-import { HttpStatus } from '@nestjs/common';
-import { ApiResponseDto } from '../dto/api-response.dto';
+import type { IApiErrorShape } from "@/common/interfaces/api.interface";
 
-// Success response
-export const success = <T>(
-  data: T | T[] | null = null,
-  message = 'Successfully completed',
-  statusCode: number = HttpStatus.OK,
-): ApiResponseDto<T | T[]> => ({
-  success: true,
-  statusCode,
-  message,
-  data,
-});
-
-// Error response
-export const error = (
-  message: string,
-  statusCode: number,
-  data: null = null,
-): ApiResponseDto<null> => ({
-  success: false,
-  statusCode,
-  message,
-  data,
-});
+export function getApiErrorMessage(err: unknown, fallback = "Something went wrong") {
+  const e = err as { data?: { message?: string }; error?: { data?: { message?: string } }; message?: string };
+  return (
+    e?.data?.message ||
+    e?.error?.data?.message ||
+    e?.message ||
+    (e as IApiErrorShape)?.message ||
+    fallback
+  );
+}
