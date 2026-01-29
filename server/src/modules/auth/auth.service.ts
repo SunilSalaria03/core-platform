@@ -7,7 +7,7 @@ import {
 import { AuthRepository } from './repository/auth.repository';
 import { UserRepository } from '../user/repositary/user.repositary';
 import { RegisterDto } from './dto/register.dto';
-import { LoginDto } from './dto/login.dto';
+import { SigninDto } from './dto/signin.dto';
 import * as bcrypt from 'bcryptjs';
 import { TokenService } from './token.service';
 import { compareHash, hashValue } from 'src/shared/helpers/crypto.helper';
@@ -55,8 +55,8 @@ export class AuthService {
     return { user, accessToken, refreshToken };
   }
 
-  // login
-  async login(dto: LoginDto) {
+  // signin
+  async signin(dto: SigninDto) {
     const email = dto.email.toLowerCase();
 
     const user = await this.userService.findByEmail(email);

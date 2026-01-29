@@ -234,7 +234,7 @@ server/
 │   │   │   ├── auth.service.ts
 │   │   │   ├── dto/
 │   │   │   │   ├── auth.dto.ts
-│   │   │   │   ├── login.dto.ts
+│   │   │   │   ├── signin.dto.ts
 │   │   │   │   └── register.dto.ts
 │   │   │   ├── strategies/
 │   │   │   │   ├── jwt.strategy.ts

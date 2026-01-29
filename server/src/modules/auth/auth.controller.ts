@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
-import { LoginDto } from './dto/login.dto';
+import { SigninDto } from './dto/signin.dto';
 import { success } from '../../common/utils/response.utils';
 import { Public } from '../../common/decorators/public.decorator';
 import { CookiesService } from '../../infrastructure/cookies/cookies.service';
@@ -36,15 +36,15 @@ export class AuthController {
   }
 
   @Public()
-  @Post('login') // Login route
-  async login(@Body() dto: LoginDto, @Res({ passthrough: true }) res: Express.Response) {
-    const result = await this.auth.login(dto); // Login the user
+  @Post('signin') // Signin route
+  async signin(@Body() dto: SigninDto, @Res({ passthrough: true }) res: Express.Response) {
+    const result = await this.auth.signin(dto); // Signin the user
 
     this.cookies.setRefreshToken(res as Response, result.refreshToken); // Set the refresh token
 
     return success(
       { user: result.user, accessToken: result.accessToken },
-      AUTH_CONSTANTS.LOGIN_SUCCESS,
+      AUTH_CONSTANTS.SIGNIN_SUCCESS,
       HTTP_STATUS.OK,
     );
   }

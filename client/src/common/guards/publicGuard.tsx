@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useMeQuery } from "@/common/api/common.api";
+import { getFromStorage } from "../utils/storage.utils";
 
 export default function PublicGuard({
   children,
@@ -15,7 +16,7 @@ export default function PublicGuard({
 
   const hasToken = useMemo(() => {
     if (typeof window === "undefined") return false;
-    return !!localStorage.getItem("accessToken");
+    return !!getFromStorage("accessToken");
   }, []);
 
   const { data: me, isLoading, isFetching } = useMeQuery(undefined, {
