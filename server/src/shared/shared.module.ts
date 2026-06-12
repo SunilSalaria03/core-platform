@@ -1,6 +1,6 @@
+// Shared module
 import { Module } from '@nestjs/common';
 
-// Shared services and providers
 @Module({
   providers: [],
   exports: [],

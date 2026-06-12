@@ -150,84 +150,136 @@ client/
         └── validations/
 ```
 
-## 📁 Project Structure Server
+## 📁 Server Folder Structure
 
+```
 server/
-├─ src/
-│  ├─ app.module.ts
-│  ├─ main.ts
-│  │
-│  ├─ config/                          # app + infra config only (env, db, swagger, etc.)
-│  │  ├─ env/
-│  │  ├─ database/
-│  │  ├─ swagger/
-│  │  └─ index.ts
-│  │
-│  ├─ common/                          # reusable cross-cutting code (used by many modules)
-│  │  ├─ constants/
-│  │  ├─ decorators/
-│  │  ├─ enums/
-│  │  ├─ exceptions/
-│  │  ├─ filters/
-│  │  ├─ guards/
-│  │  ├─ interceptors/
-│  │  ├─ interfaces/
-│  │  ├─ pipes/
-│  │  ├─ types/
-│  │  └─ utils/
-│  │
-│  ├─ shared/                          # shared services/providers (mail, storage, jwt, logger)
-│  │  ├─ logger/
-│  │  ├─ mail/
-│  │  ├─ cache/
-│  │  ├─ queue/
-│  │  ├─ storage/
-│  │  └─ shared.module.ts
-│  │
-│  ├─ modules/                         # feature modules (each is independent)
-│  │  ├─ auth/
-│  │  │  ├─ controllers/
-│  │  │  ├─ services/
-│  │  │  ├─ dto/
-│  │  │  ├─ validations/               # Joi/Zod schemas or custom validators (module scoped)
-│  │  │  ├─ constants/                 # module scoped constants
-│  │  │  ├─ interfaces/                # module scoped interfaces
-│  │  │  ├─ models/                    # schema/entity for this module only
-│  │  │  ├─ strategies/                # auth strategies
-│  │  │  └─ auth.module.ts
-│  │  │
-│  │  ├─ users/
-│  │  │  ├─ controllers/
-│  │  │  ├─ services/
-│  │  │  ├─ dto/
-│  │  │  ├─ validations/
-│  │  │  ├─ constants/
-│  │  │  ├─ interfaces/
-│  │  │  ├─ models/
-│  │  │  └─ users.module.ts
-│  │  │
-│  │  └─ <feature-name>/
-│  │     ├─ controllers/
-│  │     ├─ services/
-│  │     ├─ dto/
-│  │     ├─ validations/
-│  │     ├─ constants/
-│  │     ├─ interfaces/
-│  │     ├─ models/
-│  │     └─ <feature-name>.module.ts
-│  │
-│  ├─ middlewares/                     # app-level middleware wiring + shared middleware
-│  │  └─ *.middleware.ts
-│  │
-│  └─ database/                        # optional: if you want central DB layer
-│     ├─ mongoose/ | prisma/ | typeorm/
-│     └─ database.module.ts
+├── src/
+│   ├── app.module.ts                               # Main application module
+│   ├── main.ts                                     # Application entry point
+│   │
+│   ├── common
+│   │   ├── constants/                              # Constants
+│   │   │    ├── common.constants.ts
+│   │   │    ├── file-upload.constants.ts
+│   │   │    ├── http-status.constants.ts
+│   │   │    └── validation-messages.constants.ts
+│   │   ├── decorators/                             # Decorators
+│   │   │   └── common.decorators.ts
+│   │   ├── dto/                                    # Data Transfer Objects
+│   │   │   ├── api-response.dto.ts
+│   │   │   └── common.dtos.ts
+│   │   ├── enums/                                  # enums
+│   │   │   ├── api.enum.ts
+│   │   │   └── common.enums.ts
+│   │   ├── filters/                                # filters
+│   │   │   └── common.filters.ts
+│   │   ├── interceptors/                           # filters
+│   │   │   └── common.interceptors.ts
+│   │   ├── interfaces/                             # TypeScript interfaces
+│   │   │   ├── api-response.interface.ts
+│   │   │   └── common.interfaces.ts
+│   │   ├── middlewares/                            # middlewares
+│   │   │   ├── logger.middlewares.ts
+│   │   │   └── common.middlewares.ts
+│   │   ├── pipes/                                  # pipes
+│   │   │   └── common.pipes.ts
+│   │   └── utils/                                  # Utility functions
+│   │       ├── common.utils.ts
+│   │       └── response.utils.ts
+│   │
+│   ├── config/
+│   │   ├── config.module.ts
+│   │   ├── env/
+│   │   │   └── env.config.ts
+│   │   └── swagger/
+│   │       └── swagger.config.ts
+│   │
+│   ├── database/
+│   │   ├── database.module.ts
+│   │   └── prisma/
+│   │       ├── prisma.config.ts
+│   │       ├── prisma.service.ts
+│   │       ├── schema.prisma
+│   │       ├── seeds/
+│   │       │   └── seed.ts
+│   │       └── migrations/
+│   │           ├── 2026**
+│   │           │   └── migration.sql
+│   │           └── 2026**
+│   │               └── migration.sql
+│   │
+│   ├── infrastructure/
+│   │   ├── infrastructure.module.ts
+│   │   ├── cache/
+│   │   │   ├── cache.module.ts
+│   │   │   └── cache.service.ts
+│   │   ├── logger/
+│   │   │   ├── logger.module.ts
+│   │   │   └── logger.service.ts
+│   │   ├── mail/
+│   │   │   ├── mail.module.ts
+│   │   │   └── mail.service.ts
+│   │   ├── queue/
+│   │   │   ├── queue.module.ts
+│   │   │   └── queue.service.ts
+│   │   └── storage/
+│   │       ├── storage.module.ts
+│   │       └── storage.service.ts
+│   │
+│   ├── modules
+│   │   ├── auth/                  # Authentication module
+│   │   │   ├── auth.controller.ts
+│   │   │   ├── auth.module.ts
+│   │   │   ├── auth.service.ts
+│   │   │   ├── dto/
+│   │   │   │   ├── auth.dto.ts
+│   │   │   │   ├── signin.dto.ts
+│   │   │   │   └── register.dto.ts
+│   │   │   ├── strategies/
+│   │   │   │   ├── jwt.strategy.ts
+│   │   │   │   └── local.strategy.ts
+│   │   │   └── validations/
+│   │   │       └── auth.validation.ts
+│   │   ├── user/                  # User management module
+│   │   │   ├── user.controller.ts
+│   │   │   ├── user.module.ts
+│   │   │   ├── user.service.ts
+│   │   │   ├── dto/
+│   │   │   │   ├── create-user.dto.ts
+│   │   │   │   ├── update-user.dto.ts
+│   │   │   │   └── user-response.dto.ts
+│   │   │   ├── repository/
+│   │   │   │   └── user.repository.ts
+│   │   │   └── validations/
+│   │   │       └── user.validation.ts
+│   │   └── health/                 # Health module ( for live )
+│   │       ├── health.controller.ts
+│   │       ├── health.module.ts
+│   │       └── health.service.ts
+│   │
+│   └── shared/
+│       ├── shared.module.ts
+│       └── helpers/
+│           ├── crypto.helper.ts
+│           ├── pagination.helper.ts
+│           └── slug.helper.ts
 │
-├─ test/
-├─ dist/
-├─ package.json
-├─ tsconfig.json
-└─ README.md
+├── test/
+│   ├── app.e2e-spec.ts
+│   └── jest-e2e.json
+│
+├── .gitignore
+├── .env.development                            # Development enviornment file (.gitignore)
+├── .env.staging                                # Staging enviornment file (.gitignore)
+├── .env.production                             # Production enviornment (.gitignore)
+├── eslint.config.mjs
+├── nest-cli.json
+├── package-lock.json                           # lock file (.gitignore)
+├── package.json
+├── tsconfig.json
+└── tsconfig.build.json
+```
 
 ## Contributing
 

@@ -1,0 +1,15 @@
+model User {
+  id               String   @id @default(uuid())
+  name             String
+  email            String   @unique
+  password         String
+  role             Int      @default(1) // 0=Admin, 1=User
+  refreshTokenHash String?
+  isActive         Boolean  @default(true)
+  emailVerified    Boolean  @default(false)
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  authSessions AuthSession[]
+}
